@@ -7,7 +7,7 @@ class PilhaEstaticaInvertida : Empilhavell {
 
     constructor(tamanho: Int) {
         dados = arrayOfNulls(tamanho)
-        ponteiroTopo = -1
+        ponteiroTopo = tamanho
     }
     
     // construtores são públicos para conseguir criar objetos normalmente

@@ -1,6 +1,6 @@
 fun main(args: Array<String>) {
 
-    var pilha : Empilhavell = PilhaEstaticaInvertida(7)
+    var pilha : Empilhavell = PilhaEstaticaInvertida(9)
     pilha.empilhar("Instituto")
     pilha.empilhar("Federal")
     println("Topo: ${pilha.topo()}")
