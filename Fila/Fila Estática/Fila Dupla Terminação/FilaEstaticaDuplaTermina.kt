@@ -3,8 +3,8 @@ class FilaEstaticaDuplaTermina(private val tamanho: Int = 10) : DuplaEnfileirave
     // atributos
     private var ponteiroInicial = 0
     private var ponteiroFinal = -1
-    private var quantidade = 0
     private var dados: Array<Any?> = arrayOfNulls(tamanho)
+    private var quantidade = 0
 
     override fun atualizarInicio(dado: Any?) {
         if (!estaVazia())
@@ -18,6 +18,21 @@ class FilaEstaticaDuplaTermina(private val tamanho: Int = 10) : DuplaEnfileirave
         dados[ponteiroFinal] = dado
         else
         println("Queue is empty!")
+    }
+
+
+    override fun enfileirarFim(dado: Any?) {
+        if (!estaCheia()){
+            ponteiroFinal++
+            //pra fila funcionar de forma circular
+            if (ponteiroFinal == dados.size) 
+                ponteiroFinal = 0
+            quantidade++
+            // fim
+            dados[ponteiroFinal] = dado 
+        } else {
+            println("Queue is full!")
+         }
     }
 
     override fun enfileirarInicio(dado: Any?) {
@@ -35,27 +50,12 @@ class FilaEstaticaDuplaTermina(private val tamanho: Int = 10) : DuplaEnfileirave
         } else {
             println("Queue is full!")
         }
-        }
     }
-
-    override fun enfileirarFim(dado: Any?) {
-        if (!estaCheia()){
-            ponteiroFinal++
-            //pra fila funcionar de forma circular
-            if (ponteiroFinal == dados.size) {
-                ponteiroFinal = 0
-            }
-            quantidade++
-            // fim
-            dados[ponteiroFinal] = dado 
-        } else {
-            println("Queue is full!")
-        }
 
     override fun desenfileirarInicio(): Any? {
 		var aux: Any? = null
 		if (!estaVazia()) {
-			aux = dados[ponteiroInicio]
+			aux = dados[ponteiroInicial]
 			ponteiroInicial++
 			//  pra fila funcionar de forma circular
 			if (ponteiroInicial == dados.size)
@@ -84,7 +84,7 @@ class FilaEstaticaDuplaTermina(private val tamanho: Int = 10) : DuplaEnfileirave
 		return aux
 	}
 
-    override fun frente(): Any? {
+    override fun espiarInicio(): Any? {
         var aux: Any? = null
         if (!estaVazia()) {
             aux = dados[ponteiroInicial]
@@ -94,7 +94,7 @@ class FilaEstaticaDuplaTermina(private val tamanho: Int = 10) : DuplaEnfileirave
         return aux    
     }
 
-    override fun tras(): Any? {
+    override fun espiarFim(): Any? {
         var aux: Any? = null 
         if (!estaVazia()) {
             aux = dados[ponteiroFinal]
@@ -111,36 +111,39 @@ class FilaEstaticaDuplaTermina(private val tamanho: Int = 10) : DuplaEnfileirave
 	override fun estaVazia(): Boolean {
 		return quantidade == 0
 	}
-	
-    override fun imprimirFrentePraTras(): String {
+
+    override fun imprimirdeFrente(): String {
 		var resultado = "["
 		var ponteiroAux = ponteiroInicial
 		for (i in 0 .. quantidade-1) {
-			if (i == quantidade-1)
+			if (i == quantidade-1) 
 				resultado += "${dados[ponteiroAux]}"
-			else
+             else 
 				resultado += "${dados[ponteiroAux]},"
+            
 			ponteiroAux++
-            if (ponteiroAux == dados.size)
-            ponteiroAux = 0			
+            if (ponteiroAux == dados.size) 
+            ponteiroAux = 0		
 		}
 		return "$resultado]"
 	}
 
-    override fun imprimirTrasPraFrente(): String {
+   
+	
+    override fun imprimirdeTras(): String {
 		var resultado = "["
-		var ponteiroAux = ponteiroInicial
+		var ponteiroAux = ponteiroFinal
 		for (i in 0 .. quantidade-1) {
-			if (i == 0)
-				resultado += "${ponteiroAux]}"
-			else
-				resultado += "${ponteiroAux]},"
+			if (i == quantidade-1) 
+				resultado += "${dados[ponteiroAux]}"
+            else 
+				resultado += "${dados[ponteiroAux]},"
+
 			ponteiroAux--
-            if (ponteiroAux == -1)
-            ponteiroAux = dados.size-1		
+            if (ponteiroAux == -1) 
+            ponteiroAux = dados.size-1	
 		}
 		return "$resultado]"
 	}
-
 
 }
